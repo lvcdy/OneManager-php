@@ -1,16 +1,16 @@
-[中文readme](readme_cn.md)  
+# 注意：
 
-# NOTICE: 
+  请关掉浏览器的翻译。  
 
-  The Releases is used as archive, not newest code.  
+  Releases只是当存档在用的，并不是最新代码。  
 
-  Please read the descriptions of settings before raising an issue.  
+  请将设置中所有的设置项的说明都读一遍，有些问题就不用问了。  
 
 ---
 
-# Deploy to Vercel  
+# 部署到 Vercel  
 
-### Official
+### 官网
 
   https://vercel.com/  
 
@@ -18,47 +18,47 @@
 
   https://onemanager-php.vercel.app/  
 
-### Notice
+### 注意
 
-> 1. you must wait 30-50s to make sure deploy READY after change config;  
+> 1. 每次更改配置后都要等 30-50s 来确保部署成功；  
 >
-> 2. Vercel limit 100 deploy every day.  
+> 2. Vercel 每天限制 100 次部署。  
 
-### How to Install
+### 安装（英文）
 
-> https://scfonedrive.github.io/Vercel/Deploy.html .  
+  https://scfonedrive.github.io/Vercel/Deploy.html   
 
 ---
 
-# Deploy to Replit  
+# 部署到 Replit  
 
-### Official
+### 官网
 
   https://repl.it/  
   https://replit.com/  
 
-### Notice
+### 注意
 
-  you should Republish after 30 days to active it.  
+  每30天要重新发布  
 
-### How to Install
+### 安装
 A:
-> 1. Click the "+" or "Create Repl", click the `Import from Github`;  
-> 2. Input `https://github.com/qkqpttgf/OneManager-php` in "GitHub URL", then it will auto show "Language" - "PHP Web Server", Click the "Import from Github";  
-> 3. After done, click the green button "Run", it will show the web page on the right, you MUST open it in a new tab or window.
+> 1. 点右上的 "+" 或左上的 "+ Create Repl"，点击`Import from Github`；
+> 2. 在"GitHub URL"中输入`https://github.com/qkqpttgf/OneManager-php`，会自动弹出显示"Language"与"PHP Web Server"，点下面的"Import from Github"。  
+> 3. 结束后，点上方的绿色 "Run" 按钮，右边会显示一个网页，你要在新窗口打开它来安装，不然不能登录。  
 
 B:
-> 1. Click the "+" or "Create Repl", find template "PHP Web Server" (via input "php"), input a name for your project in "Title" or left it default, Click the "+ Create Repl".  
-> 2. After done, input `git clone https://github.com/qkqpttgf/OneManager-php && mv -b OneManager-php/* ./ && mv -b OneManager-php/.[^.]* ./ && rm -rf *~ && rm -rf OneManager-php` to Console or Shell on the right, press "Enter" to run it.  
-> 3. Click the green button "Run", it will show the web page on the right, you MUST open it in a new tab or window.  
+> 1. 点右上的 "+" 或左上的 "+ Create Repl"，template中输入php，点选"PHP Web Server"，在"Title"里输入你想要的名称或者让它默认, 点下面的"+ Create Repl"。  
+> 2. 结束后，在右边的Console或Shell里输入 `git clone https://github.com/qkqpttgf/OneManager-php && mv -b OneManager-php/* ./ && mv -b OneManager-php/.[^.]* ./ && rm -rf *~ && rm -rf OneManager-php` 敲回车运行。  
+> 3. 点上方的绿色 "Run" 按钮，右边会显示一个网页，你要在新窗口打开它来安装，不然不能登录。  
 
 ---
 
-# ~~Deploy to Heroku~~  
+# ~~部署到 Heroku~~  
 
-## Dyno will no longer free  
+## Dyno套餐不再免费  
 
-### Official
+### 官网
 
   https://heroku.com  
 
@@ -66,162 +66,264 @@ B:
 
   https://herooneindex.herokuapp.com/  
 
-### How to Install
+### 安装
 
-> ~~Click the button [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) to Deploy a new app~~(`"We couldn't deploy your app because the source code violates the Salesforce Acceptable Use and External-Facing Services Policy."`)  
->
-> Star this project, then Fork, create an app in Heroku, then turn to the Deploy tab, "Deployment method" via "Connect GitHub", select your github fork.   
+> 给这个项目点star，然后fork，在Heroku创建一个app，然后点进Deploy页，在"Deployment method"处点"Connect GitHub"，选择你的fork。   
 
 ---
 
-# ~~Deploy to Glitch~~  
-
-End service  
+# ~~部署到 Glitch~~  
+  
+停止服务了  
+  
 ---
 
-# ~~Deploy to Tencent Serverless Cloud Function (SCF)~~  
+# ~~部署到腾讯无服务器云函数 Serverless Cloud Function (SCF)~~  
 
-## SCF no longer free
+## SCF要收套餐费用了  
 
-### Official
+### 官网
 
   https://cloud.tencent.com/product/scf  
 
 ### DEMO
 
-  null  
+  暂无  
 
-### How to Install
+### 注意事项
 
-  see CN readme.  
+  SCF新增限制，环境变量整体最大4KB，所以最多添加4个盘（可以在安装时选择将配置保存在文件来避开限制）。  
+
+### 安装
+
+1. 进入函数服务，上方选择地区，然后点击新建。
+
+2. 输入函数名称，选择模板函数，在模糊搜索中输入onedrive，大小写随意，选择那个【获取onedrive信息.....】，点下一步，在代码界面不用动，直接点完成。
+
+3. 点击触发管理，创建触发器，触发方式改成API网关触发，底下勾选启用集成响应，提交。
+
+4. 在触发管理中可以看到一个 访问路径，访问它，开始安装。 
+
+    （重点：**勾选集成响应**）  
+
+> **添加网盘时，SCF可能会反应不过来，不跳转到微软，导致添加失败，请不要删除这个盘，再添加一次相同标签的盘就可以了。**
 
 ----
 
 
-# Deploy to Huawei cloud Function Graph (FG)  
+# 部署到华为云函数工作流 Function Graph (FG)  
 
-### Official
+### 官网
 
   https://console.huaweicloud.com/functiongraph/  
 
 ### DEMO
 
-  null
+  暂无  
 
-### How to Install
+### 注意事项
 
-  see CN readme.  
+  FG中，环境变量整体大小为2KB，所以最多添加2个盘（一个onedrive一个aliyundrive）（可以在安装时选择将配置保存在文件来避开限制）。  
+
+### 安装
+
+1. 在函数列表，点右边创建函数  
+2. 输入名称，选择运行时语言为PHP7.3，点上传ZIP文件，选择文件，然后点右边的创建函数（这里的ZIP文件不能直接用从Github上下载的ZIP文件，要将它解压后，去掉外层文件夹后，再压缩为ZIP。）  
+3. 创建触发器：选API网关，安全认证选None，后端超时（毫秒）将5000改成30000，上面创建分组一下，其它的点点点  
+4. 访问触发器给的url，开始安装
+5. 在【触发器界面】点【触发器名称】，跳到API网关管理，右边【更多URL】，可以添加自定义域名，自定义域名后发现还是要 xxxx.com/函数名 来访问，点上方的【编辑】，第1页不用改，点【下一步】，**请求Path改成/**，注意匹配模式是前缀匹配，Method为ANY，然后不用点下一步了，点【立即完成】，然后去【发布】生效  
 
 ----
 
-# Deploy to Aliyun Function Compute (FC)  
+# 部署到阿里云函数计算 Function Compute (FC)  
 
-### Official: 
+### 官网 
 
   https://fc.console.aliyun.com/  
 
 ### DEMO
 
-  null  
+  无  
 
-### How to Install
+### 安装
 
-  see CN readme.  
+1. 新建函数 -- HTTP函数  
+2. 运行环境选择php7.2  
+3. 触发器认证方式选择anonymous，请求方式里面，点一下GET，再点一下POST，最终框框里面有这2个  
+4. 上传代码（这里的ZIP文件不能直接用从Github上下载的ZIP文件，要将它解压后，去掉外层文件夹后，再压缩为ZIP。）  
+5. 触发器中点进去，找到配置自定义域名，点击前往，创建，路径中填 /* ，其它下拉选择。
+6. 访问你的域名，开始安装  
 
 ---
 
-# Deploy to Baidu Cloud Function Compute (CFC)  
+# 部署到百度云函数计算 Cloud Function Compute (CFC)  
 
-### Official
+### 官网
 
   https://console.bce.baidu.com/cfc/#/cfc/functions  
 
 ### DEMO
 
-  null
+  暂无  
 
-### How to Install
+### 注意事项
 
-  see CN readme.  
+  **自定义域名需要另外使用API网关，并备案。**
+
+### 安装
+
+1. 在函数列表，点创建函数  
+2. 创建方式改为空白函数，点下一步  
+3. 输入名称，选择运行时为PHP7.2，点下一步  
+4. 触发器：下拉选择HTTP触发器，URL路径填 /{filepath+} ，HTTP方法全选，身份验证：不验证，点提交  
+5. 进入代码编辑页，编辑类型改上传函数ZIP包，选择文件（这里的ZIP文件不能直接用从Github上下载的ZIP文件，要将它解压后，去掉外层文件夹后，再压缩为ZIP。），开始上传  
+6. 点击右边触发器，复制并访问提供的url，开始安装  
 
 ---
 
-# Deploy to Virtual Private Server (VPS) or php host  
+# 部署到VPS (Virtual Private Server) 或 空间  
 
 ### DEMO
 
-  null
+暂无
 
-### How to Install
+### 安装
 
-1. Start web service on your server (httpd or other), make sure you can visit it.  
+1. 启动web服务器，确保你能访问到。  
 
-2. Install (or Enable) rewrite_module (or RewriteEngine, or URL_rewrite).  
+2. 安装 rewrite_module （或称 RewriteEngine，或 URL_Rewrite）。  
 
-3. Upload code.  
+3. 上传好代码。  
 
-4. Make the rewrite works, the rule is in .htaccess file (IIS rule in web.config file), make sure any query redirect to index.php.  
+4. 开启伪静态(重写)功能，规则在.htaccess文件中，ngnix从里面复制，IIS规则在web.config文件中，我们的目的是不管访问什么都让index.php来处理。  
 
-5. Change the file .data/config.php can be read&write (666 is suggested).  
+5. 使web身份可读写代码中的.data/config.php文件，推荐chmod 666 .data/config.php。  
 
-6. View the website in chrome or other.  
-
-----
-
-# Features  
-
-  When downloading files, the program produce a direct url, visitor download files from MS OFFICE via the direct url, the server expend a few bandwidth in produce.  
-
-  When uploading files, the program produce a direct url, visitor upload files to MS OFFICE via the direct url, the server expend a few bandwidth in produce.  
-
-  The XXX_path in setting is the path in Onedrive, not in url, program will find the path in Onedrive.  
-
-  LOGO ICON: put your 'favicon.ico' in the path you showed, make sure xxxxx.com/favicon.ico can be visited.   
-
-  Program will show content of 'readme.md' & 'head.md'.  
-
-  guest upload path, is a folder that the guest can upload files, but can not be list (exclude admin).  
-
-  If there is 'index.html' file, program will only show the content of 'index.html', not list the files.  
-
-  Click 'EditTime' or 'Size', the list will sort by time or size, Click 'File' can resume sort.  
+6. 在浏览器中访问。  
 
 ----
 
-# Functional files
+# 特性  
+
+  下载时，由程序解析出直链，浏览器直接从微软Onedrive服务器下载文件，服务器只消耗与微软通信的少量流量。  
+
+  上传时，由程序生成上传url，浏览器直接向微软Onedrive的这个url上传文件，服务器只消耗与微软通信的少量流量。  
+
+  设置中的 XXX_path 是Onedrive里面的路径，并不是你url里面的，程序会去你Onedrive里面找这个路径。  
+
+  网站图标：将favicon.ico文件放在你要展示的目录中，确保 xxxxx.com/favicon.ico 可以访问到。  
+
+  可以在文件列表显示head.md跟readme.md文件的内容。  
+
+  游客上传目录（也叫图床目录），是指定一个目录，让游客可以上传文件，不限格式，不限大小。这个目录里面的内容不列清单（除非管理登录）。  
+
+  如果目录中有index.html文件，只会输出显示html文件，不显示程序框架。  
+
+  点击“时间”、“大小”，可以排序显示，点“文件”恢复原样。  
+
+----
+
+# 功能性文件
 
 ### favicon.ico
 
-  put it in the showing home folder of FIRST disk (maybe not root of onedrive). 
+  放在第一个盘的显示目录（不一定是onedrive根目录）。  
 
 ### index.html
 
-  show content of index.html as html. 
+  将index.html以静态网页显示出来。  
 
 ### head.md
 
 ### readme.md
 
-  it will showed at top or bottom as markdown.
+  以MD语法显示在顶部或底部。  
 
 ### head.omf
 
 ### foot.omf
 
-  it will showed at top or bottom as html (javascript works!). 
+  以html显示在顶部或底部（可以跑js）。  
 
 ----
 
-# A cup of coffee
+# 捐赠
 
   https://paypal.me/qkqpttgf  
 
 -----
 
-# Chat
+# 群聊
+
+  **请先看完上面的说明再加群，谢谢！**  
+
+### QQ 群:
+
+  212088653  
 
 ### Telegram Group
 
   https://t.me/joinchat/I_RVc0bqxuxlT-d0cO7ozw  
 
+---
 
+# Docker 镜像部署教程
+
+### 1. 构建镜像
+
+在项目根目录执行：
+
+```bash
+docker build -t onemanager-php:latest .
+```
+
+### 2. 启动容器
+
+先在宿主机创建数据目录（避免自动创建为 root 导致权限问题）：
+
+```bash
+mkdir -p .data
+WWWDATA_UID=$(docker run --rm php:7.4-apache id -u www-data)
+WWWDATA_GID=$(docker run --rm php:7.4-apache id -g www-data)
+sudo chown -R ${WWWDATA_UID}:${WWWDATA_GID} .data
+chmod 755 .data
+```
+
+说明：Docker 绑定挂载会保留宿主机目录的 UID/GID，需让 `.data` 的宿主机所有者与容器内 `www-data` 身份匹配，容器才能正常读写该目录。  
+如果跳过这一步，常见现象是安装时写入配置失败或后续上传失败。  
+
+```bash
+docker run -d \
+  --name onemanager-php \
+  -p 8080:80 \
+  -v $(pwd)/.data:/var/www/html/.data \
+  onemanager-php:latest
+```
+
+Windows PowerShell 建议直接使用 `${PWD}`，CMD 可改为 `%cd%`。  
+
+### 3. （可选）连接你服务器本地的 PostgreSQL / Redis
+
+项目默认不依赖 PostgreSQL / Redis；如果你后续有插件或二次开发需要 SQL/缓存，再按需增加主机映射：
+
+```bash
+docker run -d \
+  --name onemanager-php \
+  -p 8080:80 \
+  --add-host=host.docker.internal:host-gateway \
+  -v $(pwd)/.data:/var/www/html/.data \
+  onemanager-php:latest
+```
+
+容器内可通过 `host.docker.internal` 访问宿主机服务，例如：
+- PostgreSQL: `host.docker.internal:5432`
+- Redis: `host.docker.internal:6379`
+
+### 4. 访问并安装
+
+浏览器打开：
+
+`http://服务器IP:8080`
+
+首次访问按页面提示完成安装即可。  
+如果你使用反向代理或其他端口，请按实际地址访问。
