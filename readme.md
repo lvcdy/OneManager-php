@@ -285,7 +285,7 @@ docker build -t onemanager-php:latest .
 mkdir -p .data
 WWWDATA_UID_GID=$(docker run --rm php:7.4-apache sh -c 'echo "$(id -u www-data):$(id -g www-data)"')
 sudo chown -R ${WWWDATA_UID_GID} .data
-chmod 775 .data
+chmod 755 .data
 ```
 
 说明：Docker 绑定挂载会保留宿主机目录的 UID/GID，需让 `.data` 的宿主机所有者与容器内 `www-data` 身份匹配，容器才能正常读写该目录。  
