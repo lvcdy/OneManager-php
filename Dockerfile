@@ -1,7 +1,8 @@
 FROM php:7.4-apache
 
 RUN a2enmod rewrite \
-    && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
+    && printf '<Directory /var/www/html>\n    AllowOverride All\n</Directory>\n' > /etc/apache2/conf-available/onemanager.conf \
+    && a2enconf onemanager
 
 WORKDIR /var/www/html
 
