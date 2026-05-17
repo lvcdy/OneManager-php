@@ -287,6 +287,8 @@ sudo chown -R 33:33 .data
 chmod 775 .data
 ```
 
+`33:33` 是 Debian 系镜像里 `www-data` 的常见 UID:GID；如果你的环境不同，请改为实际的 `www-data` 对应 UID:GID。  
+
 说明：上面是宿主机目录权限，挂载后容器内 `www-data` 对 `/var/www/html/.data` 的读写能力取决于该宿主机目录权限。  
 
 ```bash
