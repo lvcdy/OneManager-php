@@ -283,13 +283,12 @@ docker build -t onemanager-php:latest .
 
 ```bash
 mkdir -p .data
-WWWDATA_UID=$(docker run --rm php:7.4-apache id -u www-data)
-WWWDATA_GID=$(docker run --rm php:7.4-apache id -g www-data)
-sudo chown -R ${WWWDATA_UID}:${WWWDATA_GID} .data
+WWWDATA_UID_GID=$(docker run --rm php:7.4-apache sh -c 'echo "$(id -u www-data):$(id -g www-data)"')
+sudo chown -R ${WWWDATA_UID_GID} .data
 chmod 775 .data
 ```
 
-说明：上面是宿主机目录权限，挂载后容器内 `www-data` 对 `/var/www/html/.data` 的读写能力取决于该宿主机目录权限。  
+说明：Docker 绑定挂载会保留宿主机目录的 UID/GID，需让 `.data` 的宿主机所有者与容器内 `www-data` 身份匹配，容器才能正常读写该目录。  
 
 ```bash
 docker run -d \
@@ -301,7 +300,24 @@ docker run -d \
 
 Windows PowerShell 建议直接使用 `${PWD}`，CMD 可改为 `%cd%`。  
 
-### 3. 访问并安装
+### 3. （可选）连接你服务器本地的 PostgreSQL / Redis
+
+如果你后续有插件或二次开发需要 SQL/缓存，可在启动容器时增加主机映射：
+
+```bash
+docker run -d \
+  --name onemanager-php \
+  -p 8080:80 \
+  --add-host=host.docker.internal:host-gateway \
+  -v $(pwd)/.data:/var/www/html/.data \
+  onemanager-php:latest
+```
+
+容器内可通过 `host.docker.internal` 访问宿主机服务，例如：
+- PostgreSQL: `host.docker.internal:5432`
+- Redis: `host.docker.internal:6379`
+
+### 4. 访问并安装
 
 浏览器打开：
 
