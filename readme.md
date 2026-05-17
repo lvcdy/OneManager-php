@@ -286,7 +286,7 @@ mkdir -p .data
 chmod 777 .data
 ```
 
-说明：上面是宿主机目录权限，挂载后会覆盖容器内 `/var/www/html/.data` 的默认权限设置。  
+说明：上面是宿主机目录权限，挂载后容器内 `www-data` 对 `/var/www/html/.data` 的读写能力取决于该宿主机目录权限。  
 
 ```bash
 docker run -d \
