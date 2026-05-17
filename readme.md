@@ -123,12 +123,12 @@ B:
 
 ### 注意事项
 
-  FG中，环境变量整体大小为2KB，所以最多添加2个盘（一个onedrive一个aliyundrive）（可以在安装时选择将配置保存在文件来避开限制）。  
+  这是历史部署方式，当前如果你只在自己的服务器上运行，优先使用 Docker 镜像部署。FG 中环境变量整体大小为 2KB，所以最多添加 2 个盘（一个 onedrive 一个 aliyundrive）（可以在安装时选择将配置保存在文件来避开限制）。  
 
 ### 安装
 
 1. 在函数列表，点右边创建函数  
-2. 输入名称，选择运行时语言为PHP7.3，点上传ZIP文件，选择文件，然后点右边的创建函数（这里的ZIP文件不能直接用从Github上下载的ZIP文件，要将它解压后，去掉外层文件夹后，再压缩为ZIP。）  
+2. 输入名称，选择平台当前支持的 PHP 运行时版本，点上传 ZIP 文件，选择文件，然后点右边的创建函数（这里的 ZIP 文件不能直接用从 Github 上下载的 ZIP 文件，要将它解压后，去掉外层文件夹后，再压缩为 ZIP。）  
 3. 创建触发器：选API网关，安全认证选None，后端超时（毫秒）将5000改成30000，上面创建分组一下，其它的点点点  
 4. 访问触发器给的url，开始安装
 5. 在【触发器界面】点【触发器名称】，跳到API网关管理，右边【更多URL】，可以添加自定义域名，自定义域名后发现还是要 xxxx.com/函数名 来访问，点上方的【编辑】，第1页不用改，点【下一步】，**请求Path改成/**，注意匹配模式是前缀匹配，Method为ANY，然后不用点下一步了，点【立即完成】，然后去【发布】生效  
@@ -148,7 +148,7 @@ B:
 ### 安装
 
 1. 新建函数 -- HTTP函数  
-2. 运行环境选择php7.2  
+2. 运行环境选择平台当前支持的 PHP 运行时版本  
 3. 触发器认证方式选择anonymous，请求方式里面，点一下GET，再点一下POST，最终框框里面有这2个  
 4. 上传代码（这里的ZIP文件不能直接用从Github上下载的ZIP文件，要将它解压后，去掉外层文件夹后，再压缩为ZIP。）  
 5. 触发器中点进去，找到配置自定义域名，点击前往，创建，路径中填 /* ，其它下拉选择。
@@ -174,7 +174,7 @@ B:
 
 1. 在函数列表，点创建函数  
 2. 创建方式改为空白函数，点下一步  
-3. 输入名称，选择运行时为PHP7.2，点下一步  
+3. 输入名称，选择运行时为平台当前支持的 PHP 运行时版本，点下一步  
 4. 触发器：下拉选择HTTP触发器，URL路径填 /{filepath+} ，HTTP方法全选，身份验证：不验证，点提交  
 5. 进入代码编辑页，编辑类型改上传函数ZIP包，选择文件（这里的ZIP文件不能直接用从Github上下载的ZIP文件，要将它解压后，去掉外层文件夹后，再压缩为ZIP。），开始上传  
 6. 点击右边触发器，复制并访问提供的url，开始安装  
@@ -269,61 +269,50 @@ B:
 
 # Docker 镜像部署教程
 
+这套镜像适合直接在你自己的服务器上单机运行。配置、主题缓存和上传相关状态都放在 `.data`，所以部署时只需要把这个目录持久化即可。
+
 ### 1. 构建镜像
 
 在项目根目录执行：
 
 ```bash
-docker build -t onemanager-php:latest .
+docker build --pull -t onemanager-php:latest .
 ```
+
+说明：镜像基础层使用官方 `php:apache`，并在构建时加上 `--pull`，这样每次重新构建都会尽量获取最新的 PHP 版本。
 
 ### 2. 启动容器
 
-先在宿主机创建数据目录（避免自动创建为 root 导致权限问题）：
+推荐先用 Docker 命名卷，省掉宿主机权限处理：
+
+```bash
+docker volume create onemanager-data
+docker run -d \
+  --name onemanager-php \
+  --restart unless-stopped \
+  -p 8080:80 \
+  -v onemanager-data:/var/www/html/.data \
+  onemanager-php:latest
+```
+
+如果你更想把配置文件直接放在宿主机目录，也可以改成绑定挂载：
 
 ```bash
 mkdir -p .data
-WWWDATA_UID=$(docker run --rm php:7.4-apache id -u www-data)
-WWWDATA_GID=$(docker run --rm php:7.4-apache id -g www-data)
-sudo chown -R ${WWWDATA_UID}:${WWWDATA_GID} .data
-chmod 755 .data
-```
-
-说明：Docker 绑定挂载会保留宿主机目录的 UID/GID，需让 `.data` 的宿主机所有者与容器内 `www-data` 身份匹配，容器才能正常读写该目录。  
-如果跳过这一步，常见现象是安装时写入配置失败或后续上传失败。  
-
-```bash
 docker run -d \
   --name onemanager-php \
+  --restart unless-stopped \
   -p 8080:80 \
-  -v $(pwd)/.data:/var/www/html/.data \
+  -v ${PWD}/.data:/var/www/html/.data \
   onemanager-php:latest
 ```
 
-Windows PowerShell 建议直接使用 `${PWD}`，CMD 可改为 `%cd%`。  
+Windows PowerShell 可直接使用 `${PWD}`；CMD 可改为 `%cd%`。
 
-### 3. （可选）连接你服务器本地的 PostgreSQL / Redis
-
-项目默认不依赖 PostgreSQL / Redis；如果你后续有插件或二次开发需要 SQL/缓存，再按需增加主机映射：
-
-```bash
-docker run -d \
-  --name onemanager-php \
-  -p 8080:80 \
-  --add-host=host.docker.internal:host-gateway \
-  -v $(pwd)/.data:/var/www/html/.data \
-  onemanager-php:latest
-```
-
-容器内可通过 `host.docker.internal` 访问宿主机服务，例如：
-- PostgreSQL: `host.docker.internal:5432`
-- Redis: `host.docker.internal:6379`
-
-### 4. 访问并安装
+### 3. 访问并安装
 
 浏览器打开：
 
 `http://服务器IP:8080`
 
-首次访问按页面提示完成安装即可。  
-如果你使用反向代理或其他端口，请按实际地址访问。
+首次访问按页面提示完成安装即可。若你前面用了反向代理，请按实际域名访问。
