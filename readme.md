@@ -287,6 +287,8 @@ docker run -d \
   onemanager-php:latest
 ```
 
+Windows PowerShell 可将 `$(pwd)` 改为 `${PWD}`，CMD 可改为 `%cd%`。  
+
 ### 3. 访问并安装
 
 浏览器打开：
