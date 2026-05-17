@@ -279,6 +279,13 @@ docker build -t onemanager-php:latest .
 
 ### 2. 启动容器
 
+先在宿主机创建数据目录（避免自动创建为 root 导致权限问题）：
+
+```bash
+mkdir -p .data
+chmod 777 .data
+```
+
 ```bash
 docker run -d \
   --name onemanager-php \
