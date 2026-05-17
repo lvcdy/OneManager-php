@@ -283,6 +283,7 @@ docker build -t onemanager-php:latest .
 
 ```bash
 mkdir -p .data
+docker run --rm php:7.4-apache id www-data
 sudo chown -R 33:33 .data
 chmod 775 .data
 ```
@@ -299,7 +300,7 @@ docker run -d \
   onemanager-php:latest
 ```
 
-Windows PowerShell 可将 `$(pwd)` 改为 `${PWD}`，CMD 可改为 `%cd%`。  
+Windows PowerShell 建议直接使用 `${PWD}`，CMD 可改为 `%cd%`。  
 
 ### 3. 访问并安装
 
