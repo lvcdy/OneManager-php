@@ -286,6 +286,8 @@ mkdir -p .data
 chmod 777 .data
 ```
 
+说明：上面是宿主机目录权限，挂载后会覆盖容器内 `/var/www/html/.data` 的默认权限设置。  
+
 ```bash
 docker run -d \
   --name onemanager-php \
