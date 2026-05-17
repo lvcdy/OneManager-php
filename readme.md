@@ -304,7 +304,7 @@ Windows PowerShell 建议直接使用 `${PWD}`，CMD 可改为 `%cd%`。
 
 ### 3. （可选）连接你服务器本地的 PostgreSQL / Redis
 
-如果你后续有插件或二次开发需要 SQL/缓存，可在启动容器时增加主机映射：
+项目默认不依赖 PostgreSQL / Redis；如果你后续有插件或二次开发需要 SQL/缓存，再按需增加主机映射：
 
 ```bash
 docker run -d \
